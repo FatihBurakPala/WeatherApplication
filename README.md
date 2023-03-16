@@ -10,3 +10,6 @@
 - [Retrofit](https://square.github.io/retrofit/) - To turn HTTP API into a Java interface.
 - [Dagger-Hilt](https://developer.android.com/training/dependency-injection/hilt-android) - Dependency injection library
 - [Glide](https://github.com/bumptech/glide) - Media management and image loading framework
+
+
+(https://user-images.githubusercontent.com/115170225/225607741-b61e49a1-6622-4e60-a808-f769fde1e4b0.png)
