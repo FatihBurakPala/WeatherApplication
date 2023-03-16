@@ -33,7 +33,6 @@ class WeatherFragment : Fragment() {
 
         binding.apply {
 
-            /* -----------------------------------Search Button----------------------------------- */
             searchButton.setOnClickListener {
                 val cityInput = editTextCity.text.toString()
 
@@ -51,7 +50,6 @@ class WeatherFragment : Fragment() {
                 editTextCity.onEditorAction(EditorInfo.IME_ACTION_DONE)
             }
 
-            /* -----------------------------------Network Data----------------------------------- */
             weatherViewModel.getAllWeather.observe(viewLifecycleOwner) { weatherData ->
 
                 cityText.text = weatherData.name
@@ -66,6 +64,15 @@ class WeatherFragment : Fragment() {
                     .load("http://openweathermap.org/img/wn/$weatherIcon@2x.png")
                     .into(weatherImage)
             }
+
+            weatherViewModel.loading.observe(viewLifecycleOwner) {
+                if (it) {
+                    progressBar.visibility = View.VISIBLE
+                } else {
+                    progressBar.visibility = View.GONE
+                }
+            }
+
         }
         return binding.root
     }

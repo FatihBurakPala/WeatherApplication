@@ -17,7 +17,11 @@ class WeatherViewModel @Inject constructor(private val weatherRepository: Weathe
     private val _getAllWeather = MutableLiveData<WeatherData>()
     val getAllWeather: LiveData<WeatherData> = _getAllWeather
 
+    val loading = MutableLiveData<Boolean>()
+
     fun getWeather(cityName: String) = viewModelScope.launch {
+
+        loading.postValue(true)
 
         weatherRepository.getWeather(cityName).let { response ->
             if (response.isSuccessful) {
@@ -26,5 +30,6 @@ class WeatherViewModel @Inject constructor(private val weatherRepository: Weathe
                 Log.d("TAG", response.code().toString())
             }
         }
+        loading.postValue(false)
     }
 }
