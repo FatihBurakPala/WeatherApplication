@@ -13,8 +13,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.android.weatherapplication.databinding.FragmentWeatherBinding
 import com.android.weatherapplication.utils.CheckNetwork.isOnline
+import com.android.weatherapplication.utils.loadImage
 import com.android.weatherapplication.viewmodel.WeatherViewModel
-import com.bumptech.glide.Glide
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -53,16 +53,12 @@ class WeatherFragment : Fragment() {
             weatherViewModel.getAllWeather.observe(viewLifecycleOwner) { weatherData ->
 
                 cityText.text = weatherData.name
-                descriptionText.text = weatherData.weather[0].description
+                descriptionText.text = weatherData.weather.first().description
                 tempText.text = "Temperature: ${weatherData.main.temp}°C"
                 pressureText.text = "Pressure: ${weatherData.main.pressure}"
                 humidityText.text = "Humidity: ${weatherData.main.humidity}"
                 coordTexts.text = "${weatherData.coord.lat} / ${weatherData.coord.lon}"
-
-                val weatherIcon = weatherData.weather[0].icon
-                Glide.with(this@WeatherFragment)
-                    .load("http://openweathermap.org/img/wn/$weatherIcon@2x.png")
-                    .into(weatherImage)
+                weatherImage.loadImage(weatherData.weather.first().icon)
             }
 
             weatherViewModel.loading.observe(viewLifecycleOwner) {
