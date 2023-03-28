@@ -68,7 +68,6 @@ class WeatherFragment : Fragment() {
                     progressBar.visibility = View.GONE
                 }
             }
-
         }
         return binding.root
     }
