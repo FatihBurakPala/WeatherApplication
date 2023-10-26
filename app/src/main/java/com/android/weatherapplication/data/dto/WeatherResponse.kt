@@ -1,10 +1,10 @@
-package com.android.weatherapplication.model
+package com.android.weatherapplication.data.dto
 
-data class WeatherData(
+data class WeatherResponse(
     val base: String,
     val clouds: Clouds,
     val cod: Int,
-    val coord: Coord,
+    val coord: Coordinate,
     val dt: Int,
     val id: Int,
     val main: Main,

@@ -1,4 +1,4 @@
-package com.android.weatherapplication.model
+package com.android.weatherapplication.data.dto
 
 data class Main(
     val feels_like: Double,

@@ -1,4 +1,4 @@
-package com.android.weatherapplication.model
+package com.android.weatherapplication.data.dto
 
 data class Weather(
     val description: String,

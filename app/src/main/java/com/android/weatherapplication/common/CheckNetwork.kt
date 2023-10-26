@@ -1,4 +1,4 @@
-package com.android.weatherapplication.utils
+package com.android.weatherapplication.common
 
 import android.content.Context
 import android.net.ConnectivityManager
@@ -9,7 +9,6 @@ import androidx.annotation.RequiresApi
 
 object CheckNetwork {
 
-    @RequiresApi(Build.VERSION_CODES.M)
     fun isOnline(context: Context): Boolean {
 
         val connectivityManager =

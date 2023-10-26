@@ -1,4 +1,4 @@
-package com.android.weatherapplication.utils
+package com.android.weatherapplication.common
 
 object Constants {
 

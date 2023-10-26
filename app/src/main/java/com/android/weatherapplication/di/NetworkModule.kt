@@ -1,7 +1,7 @@
 package com.android.weatherapplication.di
 
-import com.android.weatherapplication.api.ApiService
-import com.android.weatherapplication.utils.Constants
+import com.android.weatherapplication.data.source.ApiService
+import com.android.weatherapplication.common.Constants
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
@@ -14,7 +14,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object AppModule {
+object NetworkModule {
 
     @Provides
     fun provideBaseUrl() = Constants.BASE_URL

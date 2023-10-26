@@ -1,35 +1,28 @@
-package com.android.weatherapplication.ui
+package com.android.weatherapplication.presentation.weather
 
 import android.annotation.SuppressLint
-import android.os.Build
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.android.weatherapplication.R
 import com.android.weatherapplication.databinding.FragmentWeatherBinding
-import com.android.weatherapplication.utils.CheckNetwork.isOnline
+import com.android.weatherapplication.common.CheckNetwork.isOnline
+import com.android.weatherapplication.common.viewBinding
 import com.android.weatherapplication.utils.loadImage
-import com.android.weatherapplication.viewmodel.WeatherViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class WeatherFragment : Fragment() {
+class WeatherFragment : Fragment(R.layout.fragment_weather) {
 
-    private var _binding: FragmentWeatherBinding? = null
-    private val binding get() = _binding!!
+    private val binding by viewBinding(FragmentWeatherBinding::bind)
+    private val viewModel: WeatherViewModel by viewModels()
 
-    private val weatherViewModel: WeatherViewModel by viewModels()
-
-    @RequiresApi(Build.VERSION_CODES.M)
     @SuppressLint("SetTextI18n")
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-
-        _binding = FragmentWeatherBinding.inflate(inflater, container, false)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         binding.apply {
 
@@ -38,7 +31,7 @@ class WeatherFragment : Fragment() {
 
                 if(cityInput.isNotEmpty()) {
                     if(isOnline(requireContext())) {
-                        weatherViewModel.getWeather(cityInput)
+                        viewModel.getWeather(cityInput)
                     } else {
                         Toast.makeText(
                             activity,
@@ -50,8 +43,7 @@ class WeatherFragment : Fragment() {
                 editTextCity.onEditorAction(EditorInfo.IME_ACTION_DONE)
             }
 
-            weatherViewModel.getAllWeather.observe(viewLifecycleOwner) { weatherData ->
-
+            viewModel.getAllWeather.observe(viewLifecycleOwner) { weatherData ->
                 cityText.text = weatherData.name
                 descriptionText.text = weatherData.weather.first().description
                 tempText.text = "Temperature: ${weatherData.main.temp}°C"
@@ -61,7 +53,7 @@ class WeatherFragment : Fragment() {
                 weatherImage.loadImage(weatherData.weather.first().icon)
             }
 
-            weatherViewModel.loading.observe(viewLifecycleOwner) {
+            viewModel.loading.observe(viewLifecycleOwner) {
                 if (it) {
                     progressBar.visibility = View.VISIBLE
                 } else {
@@ -69,11 +61,5 @@ class WeatherFragment : Fragment() {
                 }
             }
         }
-        return binding.root
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        _binding = null
     }
 }
